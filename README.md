@@ -3,7 +3,17 @@ Fabulinus is a Java library that makes it easy to transform your OO-Code into a 
 
 ## Current Work-Process
 
- - [ ] Do Requirements Engineering
+- [ ] - Do requirements engineering 
+  - [x] define rough outline
+  - [ ] create tutorials for usage
+  - [ ] write good javaDoc
+  
+- [ ] Create library
+  - [ ] define annotations
+  - [ ] define exceptions
+  - [ ] define concurrent behaviour
+
+- [ ] use github packages to publish it
 
 
 #### Name
