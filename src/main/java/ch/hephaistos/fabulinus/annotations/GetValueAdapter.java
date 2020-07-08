@@ -4,8 +4,6 @@ import ch.hephaistos.fabulinus.adapter.ValueAdapter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.function.Function;
 
 public class GetValueAdapter implements ValueAdapter {
 
@@ -19,6 +17,7 @@ public class GetValueAdapter implements ValueAdapter {
         this.method = method;
     }
 
+    @Override
     public Object invokeFunction() {
         try {
             return method.invoke(object);
@@ -28,10 +27,6 @@ public class GetValueAdapter implements ValueAdapter {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public Class getType(){
-        return method.getReturnType();
     }
 
 }
