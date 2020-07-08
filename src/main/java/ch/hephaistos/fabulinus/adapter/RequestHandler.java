@@ -1,6 +1,5 @@
 package ch.hephaistos.fabulinus.adapter;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class RequestHandler {
     public String getValue(String variableName){
         if(resources.containsKey(variableName)){
             ValueAdapter valueAdapter = resources.get(variableName);
-            return valueAdapter.getType().cast(valueAdapter.invokeFunction()).toString();
+            return valueAdapter.invokeFunction().toString();
         }
         return "No such variable found";
     }
