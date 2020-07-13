@@ -4,7 +4,7 @@ package ch.hephaistos.fabulinus.annotations;
 import java.lang.annotation.*;
 
 /**
- * This Annotation creates a way to access the annoted variable trough a HTTP REST API.
+ * This Annotation creates a way to access the annoted variable.
  */
 
 @Documented
