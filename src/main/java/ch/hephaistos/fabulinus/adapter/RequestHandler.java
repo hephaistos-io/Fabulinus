@@ -1,5 +1,7 @@
 package ch.hephaistos.fabulinus.adapter;
 
+import ch.hephaistos.fabulinus.formatter.DataFormatter;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +9,7 @@ import java.util.Map;
 public class RequestHandler {
 
     private Map<String, ValueAdapter> resources;
+    private DataFormatter dataFormatter;
 
     public RequestHandler(){
         resources = new HashMap();
@@ -23,8 +26,12 @@ public class RequestHandler {
     public String getValue(String variableName){
         if(resources.containsKey(variableName)){
             ValueAdapter valueAdapter = resources.get(variableName);
-            return valueAdapter.invokeFunction().toString();
+            return dataFormatter.formatData(variableName, valueAdapter.invokeFunction().toString());
         }
         return "No such variable found";
+    }
+
+    public void setDataFormatter(DataFormatter dataFormatter){
+        this.dataFormatter = dataFormatter;
     }
 }
