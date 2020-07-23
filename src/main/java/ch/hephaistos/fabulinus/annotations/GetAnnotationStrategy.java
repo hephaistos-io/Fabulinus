@@ -14,8 +14,6 @@ public class GetAnnotationStrategy implements AnnotationStrategy {
 
     @Override
     public List<Pair<String, ValueAdapter>> parseFields(Object object) {
-
-
         List<Pair<String, ValueAdapter>> pairs = new ArrayList();
         Class clazz = object.getClass();
         Arrays.asList(clazz.getDeclaredFields()).stream()
