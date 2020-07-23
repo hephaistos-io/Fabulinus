@@ -1,12 +1,15 @@
 package ch.hephaistos.fabulinus.annotations;
 
+import ch.hephaistos.fabulinus.adapter.Pair;
+import ch.hephaistos.fabulinus.adapter.ValueAdapter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Tests the whole logic around the @GET annotation
@@ -73,6 +76,31 @@ public class GetAnnotationTests {
                         });
             }
         });
+    }
+
+    @Test
+    @DisplayName("the parsing function of GetAnnotationStrategy returns a list with the correct amount of elements")
+    public void parsingObjectReturnsAListWithTheCorrectAmountOfElements() {
+        GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
+        Assertions.assertTrue(list.size() == 4);
+        list.forEach(entry -> {
+            Assertions.assertNotNull(entry.getKey());
+            Assertions.assertNotNull(entry.getValue());
+        });
+    }
+
+    @Test
+    @DisplayName("The generated functions return the correct values")
+    public void generatedFunctionsReturnTheCorrectValues() {
+        GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        Assertions.assertEquals(map.get("name").invokeFunction(), name);
+        Assertions.assertEquals(map.get("age").invokeFunction(), age);
+        Assertions.assertEquals(map.get("number").invokeFunction(), number);
+        Assertions.assertEquals(map.get("unreachableString").invokeFunction(), exampleObject.randomString());
     }
 
 
