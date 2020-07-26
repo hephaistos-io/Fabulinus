@@ -127,10 +127,10 @@ public class GetAnnotationTests {
         List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
         HashMap<String, ValueAdapter> map = new HashMap<>();
         list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
-        Assertions.assertEquals(map.get("name").invokeFunction(), name);
-        Assertions.assertEquals(map.get("age").invokeFunction(), age);
-        Assertions.assertEquals(map.get("number").invokeFunction(), number);
-        Assertions.assertEquals(map.get("unreachableString").invokeFunction(), exampleObject.randomString());
+        Assertions.assertEquals(map.get("name").invokeFunction((Object) null), name);
+        Assertions.assertEquals(map.get("age").invokeFunction((Object) null), age);
+        Assertions.assertEquals(map.get("number").invokeFunction((Object) null), number);
+        Assertions.assertEquals(map.get("unreachableString").invokeFunction((Object) null), exampleObject.randomString());
     }
 
 
