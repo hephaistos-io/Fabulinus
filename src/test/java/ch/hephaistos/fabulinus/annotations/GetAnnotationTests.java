@@ -91,6 +91,36 @@ public class GetAnnotationTests {
     }
 
     @Test
+    @DisplayName("Links the correct function to the corresponding variable")
+    public void linkExistingGetFunctionToVariable() {
+        GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        Assertions.assertEquals(map.get("name").invokeFunction((Object) null), name);
+    }
+
+    @Test
+    @DisplayName("creates a correct anonymous function for the variable")
+    public void linksNewAnonymousFunctionToTheVariable() {
+        GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        Assertions.assertEquals(map.get("number").invokeFunction((Object) null), number);
+    }
+
+    @Test
+    @DisplayName("links given function to variable")
+    public void linksFunctionToTheVariable() {
+        GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        Assertions.assertEquals(map.get("unreachableString").invokeFunction((Object) null), exampleObject.randomString());
+    }
+
+    @Test
     @DisplayName("The generated functions return the correct values")
     public void generatedFunctionsReturnTheCorrectValues() {
         GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
