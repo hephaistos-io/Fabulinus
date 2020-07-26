@@ -8,25 +8,32 @@ import java.util.Map;
 
 public class RequestHandler {
 
-    private Map<String, ValueAdapter> resources;
+    private Map<String, Map<String, ValueAdapter>> resources;
     private DataFormatter dataFormatter;
 
-    public RequestHandler(){
+    public RequestHandler() {
         resources = new HashMap();
+        setupRequestTypes();
     }
 
-    public void addEntry(Pair<String, ValueAdapter> entry){
-        resources.put(entry.getKey(), entry.getValue());
+    private void setupRequestTypes(){
+        for(RequestType requestType : RequestType.values()){
+            resources.put(requestType.getName(), new HashMap<String, ValueAdapter>());
+        }
     }
 
-    public void addEntries(List<Pair<String, ValueAdapter>> entries){
-        entries.forEach(this::addEntry);
+    public void addEntry(RequestType requestType, Pair<String, ValueAdapter> entry){
+        resources.get(requestType.getName()).put(entry.getKey(), entry.getValue());
+    }
+
+    public void addEntries(RequestType requestType, List<Pair<String, ValueAdapter>> entries){
+        entries.forEach(entry -> addEntry(requestType, entry));
     }
 
     public String getValue(String variableName){
-        if(resources.containsKey(variableName)){
-            ValueAdapter valueAdapter = resources.get(variableName);
-            return dataFormatter.formatData(variableName, valueAdapter.invokeFunction().toString());
+        if(resources.get(RequestType.GET.getName()).containsKey(variableName)){
+            ValueAdapter valueAdapter = resources.get(RequestType.GET.getName()).get(variableName);
+            return dataFormatter.formatData(variableName, valueAdapter.invokeFunction(null).toString());
         }
         return "No such variable found";
     }

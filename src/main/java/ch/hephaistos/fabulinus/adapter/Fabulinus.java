@@ -12,7 +12,7 @@ public class Fabulinus {
     }
 
     public Fabulinus setupFabulinus(Object object) {
-        requestHandler.addEntries(new GetAnnotationStrategy().parseFields(object));
+        requestHandler.addEntries(RequestType.GET, new GetAnnotationStrategy().parseFields(object));
         return this;
     }
 
