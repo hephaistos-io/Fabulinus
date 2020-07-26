@@ -24,8 +24,13 @@ public class GetValueAdapter implements ValueAdapter {
         this.field = field;
     }
 
+    /**
+     * Value is not used here, as it's used to simply GET the value
+     * @param parameters
+     * @return
+     */
     @Override
-    public Object invokeFunction() {
+    public Object invokeFunction(Object ...parameters) {
         try {
             if(method == null){
                 field.setAccessible(true);
