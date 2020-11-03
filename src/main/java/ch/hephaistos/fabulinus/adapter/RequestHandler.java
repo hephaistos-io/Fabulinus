@@ -30,9 +30,9 @@ public class RequestHandler {
         entries.forEach(entry -> addEntry(requestType, entry));
     }
 
-    public String getValue(String variableName){
-        if(resources.get(RequestType.GET.getName()).containsKey(variableName)){
-            ValueAdapter valueAdapter = resources.get(RequestType.GET.getName()).get(variableName);
+    public String applyRetrievalRequest(RequestType requestType, String variableName){
+        if(resources.get(requestType.getName()).containsKey(variableName)){
+            ValueAdapter valueAdapter = resources.get(requestType.getName()).get(variableName);
             return dataFormatter.formatData(variableName, valueAdapter.invokeFunction(null).toString());
         }
         return "No such variable found";
