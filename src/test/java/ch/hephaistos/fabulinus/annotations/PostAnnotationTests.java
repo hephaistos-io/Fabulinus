@@ -2,13 +2,16 @@ package ch.hephaistos.fabulinus.annotations;
 
 import ch.hephaistos.fabulinus.adapter.Pair;
 import ch.hephaistos.fabulinus.adapter.ValueAdapter;
+import ch.hephaistos.fabulinus.annotations.post.DefaultPostValidatorStrategy;
+import ch.hephaistos.fabulinus.annotations.post.POST;
+import ch.hephaistos.fabulinus.annotations.post.PostAnnotationStrategy;
+import ch.hephaistos.fabulinus.annotations.post.PostValidatorStrategy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
