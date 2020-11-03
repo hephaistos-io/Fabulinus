@@ -1,6 +1,6 @@
-import ch.hephaistos.fabulinus.annotations.GET;
-import ch.hephaistos.fabulinus.annotations.NotNullPostValidatorStrategy;
-import ch.hephaistos.fabulinus.annotations.POST;
+import ch.hephaistos.fabulinus.annotations.get.GET;
+import ch.hephaistos.fabulinus.annotations.post.NotNullPostValidatorStrategy;
+import ch.hephaistos.fabulinus.annotations.post.POST;
 
 public class ExampleObject {
 
@@ -14,6 +14,14 @@ public class ExampleObject {
 
     @GET
     @POST
+    private float floatingNumber;
+
+    @GET
+    @POST
+    private long longBoy;
+
+    @GET
+    @POST
     private double number;
 
     @GET(function="randomString")
@@ -22,10 +30,12 @@ public class ExampleObject {
 
     private final String RANDOM_STRING = "asidjkslamdlkasdop";
 
-    public ExampleObject(String name, int age, double number){
+    public ExampleObject(String name, int age, double number, float floatingNumber, long longBoy){
         this.name = name;
         this.age = age;
         this.number = number;
+        this.floatingNumber = floatingNumber;
+        this.longBoy = longBoy;
         unreachableString = "haha can't get me!";
     }
 
