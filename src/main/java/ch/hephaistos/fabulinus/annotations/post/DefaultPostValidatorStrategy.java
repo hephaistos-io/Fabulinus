@@ -1,6 +1,6 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.post;
 
-public class DefaultPostValidatorStrategy implements PostValidatorStrategy{
+public class DefaultPostValidatorStrategy implements PostValidatorStrategy {
 
     /**
      * Always returns true

@@ -1,4 +1,7 @@
-package ch.hephaistos.fabulinus.adapter;
+package ch.hephaistos.fabulinus.annotations;
+
+import ch.hephaistos.fabulinus.adapter.Pair;
+import ch.hephaistos.fabulinus.adapter.ValueAdapter;
 
 import java.util.List;
 

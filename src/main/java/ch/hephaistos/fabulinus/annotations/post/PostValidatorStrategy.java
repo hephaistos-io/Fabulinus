@@ -1,4 +1,4 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.post;
 
 public interface PostValidatorStrategy {
 

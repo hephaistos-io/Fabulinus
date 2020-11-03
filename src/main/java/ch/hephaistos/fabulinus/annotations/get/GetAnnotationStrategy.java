@@ -1,6 +1,6 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.get;
 
-import ch.hephaistos.fabulinus.adapter.AnnotationStrategy;
+import ch.hephaistos.fabulinus.annotations.AnnotationStrategy;
 import ch.hephaistos.fabulinus.adapter.Pair;
 import ch.hephaistos.fabulinus.adapter.ValueAdapter;
 
@@ -10,24 +10,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PostAnnotationStrategy implements AnnotationStrategy {
+public class GetAnnotationStrategy implements AnnotationStrategy {
 
     @Override
     public List<Pair<String, ValueAdapter>> parseFields(Object object) {
         List<Pair<String, ValueAdapter>> pairs = new ArrayList();
         Class clazz = object.getClass();
         Arrays.asList(clazz.getDeclaredFields()).stream()
-                .filter(field -> field.isAnnotationPresent(POST.class))
+                .filter(field -> field.isAnnotationPresent(GET.class))
                 .forEach(field -> {
                     String functionName = generateFunctionName(field.getName());
-                    if (field.getAnnotation(POST.class).function().isEmpty()) {
+                    if (field.getAnnotation(GET.class).function().isEmpty()) {
                         if (Arrays.asList(clazz.getDeclaredMethods()).stream().anyMatch(functionName::equals)) {
                             pairs.add(linkFunction(functionName, field, object, clazz));
                         } else {
                             pairs.add(linkAnonymousFunction(field, object));
                         }
                     } else {
-                        pairs.add(linkFunction(field.getAnnotation(POST.class).function(), field, object, clazz));
+                        pairs.add(linkFunction(field.getAnnotation(GET.class).function(), field, object, clazz));
                     }
                 });
         return pairs;
@@ -35,6 +35,9 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
 
     private Pair<String, ValueAdapter> linkFunction(String functionName, Field field, Object object, Class clazz) {
         Method method = getMethodForFunctionName(functionName, clazz);
+        if (method.getReturnType() != field.getType()) {
+            throw new RuntimeException("Function doesn't return the correct type!");
+        }
         return new Pair(field.getName(), new GetValueAdapter(object, method));
     }
 
@@ -47,7 +50,7 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
     }
 
     private String generateFunctionName(String fieldName) {
-        return "set".concat(fieldName.substring(0, 1).toUpperCase()).concat(fieldName.substring(1));
+        return "get".concat(fieldName.substring(0, 1).toUpperCase()).concat(fieldName.substring(1));
     }
 
 }

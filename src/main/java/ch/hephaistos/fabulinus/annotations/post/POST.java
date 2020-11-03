@@ -1,5 +1,7 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.post;
 
+
+import ch.hephaistos.fabulinus.annotations.post.DefaultPostValidatorStrategy;
 
 import java.lang.annotation.*;
 

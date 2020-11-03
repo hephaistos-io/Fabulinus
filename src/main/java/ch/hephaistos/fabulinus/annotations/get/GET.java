@@ -1,4 +1,4 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.get;
 
 
 import java.lang.annotation.*;

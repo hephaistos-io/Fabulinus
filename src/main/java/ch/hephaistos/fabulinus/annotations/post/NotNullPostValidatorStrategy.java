@@ -1,6 +1,6 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.post;
 
-public class NotNullPostValidatorStrategy implements PostValidatorStrategy{
+public class NotNullPostValidatorStrategy implements PostValidatorStrategy {
 
     /**
      * Returns true if value is not null
