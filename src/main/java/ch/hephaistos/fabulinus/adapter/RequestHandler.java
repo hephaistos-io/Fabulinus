@@ -38,6 +38,15 @@ public class RequestHandler {
         return "No such variable found";
     }
 
+    public boolean applyStoringRequest(RequestType requestType, String variableName, String value){
+        if(resources.get(requestType.getName()).containsKey(variableName)){
+            ValueAdapter valueAdapter = resources.get(requestType.getName()).get(variableName);
+            valueAdapter.invokeFunction(value);
+            return true;
+        }
+        return false;
+    }
+
     public void setDataFormatter(DataFormatter dataFormatter){
         this.dataFormatter = dataFormatter;
     }
