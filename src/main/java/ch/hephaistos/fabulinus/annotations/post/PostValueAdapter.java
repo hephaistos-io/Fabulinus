@@ -38,6 +38,7 @@ public class PostValueAdapter implements ValueAdapter {
             case "Double":
                 return Double::valueOf;
             case "String":
+            case "class java.lang.String":
                 return String::valueOf;
             case "long":
             case "Long":
