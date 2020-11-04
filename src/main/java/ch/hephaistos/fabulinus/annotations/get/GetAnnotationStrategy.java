@@ -21,7 +21,7 @@ public class GetAnnotationStrategy implements AnnotationStrategy {
                 .forEach(field -> {
                     String functionName = generateFunctionName(field.getName());
                     if (field.getAnnotation(GET.class).function().isEmpty()) {
-                        if (Arrays.asList(clazz.getDeclaredMethods()).stream().anyMatch(functionName::equals)) {
+                        if (Arrays.asList(clazz.getDeclaredMethods()).stream().anyMatch(name -> name.toString().contains(functionName))) {
                             pairs.add(linkFunction(functionName, field, object, clazz));
                         } else {
                             pairs.add(linkAnonymousFunction(field, object));
