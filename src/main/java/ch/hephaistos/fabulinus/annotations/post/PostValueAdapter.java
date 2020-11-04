@@ -19,8 +19,8 @@ public class PostValueAdapter implements ValueAdapter {
     private Field field;
 
 
-    public PostValueAdapter(Object object, Method method){
-        this.object = object;
+    public PostValueAdapter(Object object, Method method, Field field){
+        this(object, field);
         this.method = method;
     }
 
@@ -56,13 +56,14 @@ public class PostValueAdapter implements ValueAdapter {
     @Override
     public Object invokeFunction(Object ...parameters) {
         try {
+            Function function = getConverterForPrimitiveTypes(field.getType());
             if(method == null){
+                boolean isFieldAccessible = field.isAccessible();
                 field.setAccessible(true);
-                Function function = getConverterForPrimitiveTypes(field.getType());
                 field.set(this.object, function.apply(parameters[0]));
-                field.setAccessible(false);
+                field.setAccessible(isFieldAccessible);
             } else {
-                method.invoke(parameters[0]);
+                method.invoke(object, function.apply(parameters[0]));
             }
             return getValueOfField();
         } catch (IllegalAccessException e) {
