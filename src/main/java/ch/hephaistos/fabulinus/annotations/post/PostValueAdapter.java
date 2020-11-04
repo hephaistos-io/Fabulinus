@@ -34,6 +34,9 @@ public class PostValueAdapter implements ValueAdapter {
             case "int":
             case "Integer":
                 return Integer::valueOf;
+            case "double":
+            case "Double":
+                return Double::valueOf;
             case "String":
                 return String::valueOf;
             case "long":
@@ -42,6 +45,9 @@ public class PostValueAdapter implements ValueAdapter {
             case "float":
             case "Float":
                 return Float::valueOf;
+            case "boolean":
+            case "Boolean":
+                return Boolean::valueOf;
             default:
                 throw new RuntimeException("Class wasnt recognized: " + clazz.toString());
         }
