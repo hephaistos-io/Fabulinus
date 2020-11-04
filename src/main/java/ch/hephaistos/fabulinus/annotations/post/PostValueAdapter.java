@@ -18,30 +18,32 @@ public class PostValueAdapter implements ValueAdapter {
 
     private Field field;
 
-    private static Map<Type, Function<String, ?>> converterMap;
 
     public PostValueAdapter(Object object, Method method){
         this.object = object;
         this.method = method;
-        constructConverterMapIfNotConstructed();
     }
 
     public PostValueAdapter(Object object, Field field){
         this.object = object;
         this.field = field;
-        constructConverterMapIfNotConstructed();
     }
 
-    private void constructConverterMapIfNotConstructed(){
-        if (converterMap == null){
-            converterMap = new HashMap<>();
-            converterMap.put(int.class, Integer::valueOf);
-            converterMap.put(Integer.class, Integer::valueOf);
-            converterMap.put(String.class, String::valueOf);
-            converterMap.put(long.class, Long::valueOf);
-            converterMap.put(Long.class, Long::valueOf);
-            converterMap.put(float.class, Float::valueOf);
-            converterMap.put(Float.class, Float::valueOf);
+    protected static Function<String, ?> getConverterForPrimitiveTypes(Class clazz){
+        switch(clazz.toString()){
+            case "int":
+            case "Integer":
+                return Integer::valueOf;
+            case "String":
+                return String::valueOf;
+            case "long":
+            case "Long":
+                return Long::valueOf;
+            case "float":
+            case "Float":
+                return Float::valueOf;
+            default:
+                throw new RuntimeException("Class wasnt recognized: " + clazz.toString());
         }
     }
 
@@ -50,7 +52,7 @@ public class PostValueAdapter implements ValueAdapter {
         try {
             if(method == null){
                 field.setAccessible(true);
-                Function function = converterMap.get(field.getType());
+                Function function = getConverterForPrimitiveTypes(field.getType());
                 field.set(this.object, function.apply(parameters[0]));
                 field.setAccessible(false);
             } else {
