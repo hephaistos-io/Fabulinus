@@ -18,24 +18,29 @@ public class ExampleObject {
 
     @GET
     @POST
-    private long longBoy;
+    private boolean bool;
 
     @GET
     @POST
+    private long longBoy;
+
+    @GET
+    @POST(function="doubleValue")
     private double number;
 
     @GET(function="randomString")
-    @POST(function="randomString")
+    @POST(function="setRandomString")
     private String unreachableString;
 
     private final String RANDOM_STRING = "asidjkslamdlkasdop";
 
-    public ExampleObject(String name, int age, double number, float floatingNumber, long longBoy){
+    public ExampleObject(String name, int age, double number, float floatingNumber, boolean bool, long longBoy){
         this.name = name;
         this.age = age;
         this.number = number;
         this.floatingNumber = floatingNumber;
         this.longBoy = longBoy;
+        this.bool = bool;
         unreachableString = "haha can't get me!";
     }
 
@@ -57,6 +62,10 @@ public class ExampleObject {
 
     public int getAge(){
         return age;
+    }
+
+    public void doubleValue(double value){
+        this.number = 2*value;
     }
 
     public String randomString(){
