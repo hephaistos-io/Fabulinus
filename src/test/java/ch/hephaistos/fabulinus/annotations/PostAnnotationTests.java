@@ -86,7 +86,7 @@ public class PostAnnotationTests {
         }
 
         public void setFloatNumber(float floatNumber){
-            this.floatNumber = 2*floatNumber;
+            this.floatNumber = 2f*floatNumber;
         }
 
     }
@@ -147,12 +147,17 @@ public class PostAnnotationTests {
     @Test
     @DisplayName("Links the correct function to the corresponding variable")
     public void linkExistingPostFunctionToVariable() {
+
         PostAnnotationStrategy postAnnotationStrategy = new PostAnnotationStrategy();
         List<Pair<String, ValueAdapter>> list = postAnnotationStrategy.parseFields(exampleObject);
         HashMap<String, ValueAdapter> map = new HashMap<>();
         list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
         map.get("name").invokeFunction("Francis");
         Assertions.assertEquals(exampleObject.name, exampleObject.finalString);
+        map.get("age").invokeFunction("42");
+        Assertions.assertEquals(exampleObject.age, 42);
+        map.get("floatNumber").invokeFunction("12.37f");
+        Assertions.assertEquals(exampleObject.floatNumber, 12.37f*2f);
     }
 
     @Test
