@@ -21,7 +21,7 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
                 .forEach(field -> {
                     String functionName = generateFunctionName(field.getName());
                     if (field.getAnnotation(POST.class).function().isEmpty()) {
-                        if (Arrays.asList(clazz.getDeclaredMethods()).stream().anyMatch(functionName::equals)) {
+                        if (Arrays.asList(clazz.getDeclaredMethods()).stream().anyMatch(name -> name.toString().contains(functionName))) {
                             pairs.add(linkFunction(functionName, field, object, clazz));
                         } else {
                             pairs.add(linkAnonymousFunction(field, object));
@@ -35,6 +35,7 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
 
     private Pair<String, ValueAdapter> linkFunction(String functionName, Field field, Object object, Class clazz) {
         Method method = getMethodForFunctionName(functionName, clazz);
+        System.out.println("linking function with name: " + functionName);
         return new Pair(field.getName(), new PostValueAdapter(object, method, field));
     }
 
