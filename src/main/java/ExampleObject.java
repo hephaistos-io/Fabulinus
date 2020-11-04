@@ -49,7 +49,7 @@ public class ExampleObject {
     }
 
     public void setAge(int age){
-        this.age = age;
+        this.age += age;
     }
 
     public void setRandomString(){
@@ -63,6 +63,7 @@ public class ExampleObject {
     public int getAge(){
         return age;
     }
+
 
     public void doubleValue(double value){
         this.number = 2*value;

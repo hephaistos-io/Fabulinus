@@ -11,24 +11,24 @@ public class Main {
                 .setDataFormatter(new JsonDataFormatter())
                 .setupFabulinus(exampleObject)
                 .create();
-        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "name"));
-        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
-        System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "age", "12"));
-        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
+
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "bool"));
         System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "bool", "false"));
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "bool"));
+
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "floatingNumber"));
-        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "longBoy"));
         System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "floatingNumber", "27f"));
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "floatingNumber"));
-        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "number"));
-        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "unreachableString"));
 
 
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "number"));
         System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "number", "12.33"));
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "number"));
+
+
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
+        System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "age", "12"));
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
 
     }
 
