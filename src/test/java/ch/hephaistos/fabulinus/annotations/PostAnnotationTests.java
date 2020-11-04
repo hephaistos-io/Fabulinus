@@ -158,18 +158,18 @@ public class PostAnnotationTests {
     @Test
     @DisplayName("creates a correct anonymous function for the variable")
     public void linksNewAnonymousFunctionToTheVariable() {
-        Assertions.assertTrue(false);
+        Assertions.fail("Not implemented");
     }
 
     @Test
     @DisplayName("links given function to variable")
     public void linksFunctionToTheVariable() {
-        Assertions.assertTrue(false);
+        Assertions.fail("Not implemented");
     }
 
     @Test
     @DisplayName("The generated functions return the correct values")
     public void generatedFunctionsReturnTheCorrectValues() {
-        Assertions.assertTrue(false);
+        Assertions.fail("Not implemented");
     }
 }
