@@ -2,6 +2,7 @@ package ch.hephaistos.fabulinus.annotations;
 
 import ch.hephaistos.fabulinus.adapter.Pair;
 import ch.hephaistos.fabulinus.adapter.ValueAdapter;
+import ch.hephaistos.fabulinus.annotations.get.GET;
 import ch.hephaistos.fabulinus.annotations.post.DefaultPostValidatorStrategy;
 import ch.hephaistos.fabulinus.annotations.post.POST;
 import ch.hephaistos.fabulinus.annotations.post.PostAnnotationStrategy;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,43 +46,62 @@ public class PostAnnotationTests {
         @POST
         private int age;
 
-        @POST(validator = PostAnnotationTests.TestingValidatior.class)
+        @POST
         private double number;
+
+        @POST
+        private float floatNumber;
+
+        @POST
+        private long longNumber;
+
+        @POST
+        private boolean booleanValue;
 
         @POST(function = "randomString")
         private String unreachableString;
 
-        private final String RANDOM_STRING = "asjdkhio21398";
+        private final String finalString = "not parsed for the library!";
 
-        public ExampleObject(String name, int age, double number) {
+        public ExampleObject(String name, int age, double number, float floatNumber, long longNumber, boolean booleanValue) {
             this.name = name;
             this.age = age;
             this.number = number;
+            this.floatNumber = floatNumber;
+            this.longNumber = longNumber;
+            this.booleanValue = booleanValue;
             unreachableString = "haha can't get me!";
         }
 
         public void setName(String name) {
-            this.name = name;
+            this.name = finalString;
         }
 
         public void setAge(int age) {
             this.age = age;
         }
 
-        public void randomString() {
-            this.unreachableString = RANDOM_STRING;
+        public String randomString() {
+            return "asdhaisdasdpo";
         }
+
+        public void setFloatNumber(float floatNumber){
+            this.floatNumber = 2*floatNumber;
+        }
+
     }
 
-
-    ExampleObject exampleObject;
+    PostAnnotationTests.ExampleObject exampleObject;
     String name = "newName";
     int age = 25;
     double number = 27;
+    float floatNumber = 15f;
+    long longNumber = 12l;
+    boolean booleanValue = false;
 
     @BeforeEach
     void beforeEach() {
-        exampleObject = new ExampleObject(name, age, number);
+        exampleObject = new PostAnnotationTests.ExampleObject(name, age, number, floatNumber, longNumber, booleanValue);
     }
 
     @Test
@@ -116,7 +137,7 @@ public class PostAnnotationTests {
     public void parsingObjectReturnsAListWithTheCorrectAmountOfElements() {
         PostAnnotationStrategy postAnnotationStrategy = new PostAnnotationStrategy();
         List<Pair<String, ValueAdapter>> list = postAnnotationStrategy.parseFields(exampleObject);
-        Assertions.assertTrue(list.size() == 4);
+        Assertions.assertTrue(list.size() == 7);
         list.forEach(entry -> {
             Assertions.assertNotNull(entry.getKey());
             Assertions.assertNotNull(entry.getValue());
@@ -125,8 +146,13 @@ public class PostAnnotationTests {
 
     @Test
     @DisplayName("Links the correct function to the corresponding variable")
-    public void linkExistingGetFunctionToVariable() {
-        Assertions.assertTrue(false);
+    public void linkExistingPostFunctionToVariable() {
+        PostAnnotationStrategy postAnnotationStrategy = new PostAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = postAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        map.get("name").invokeFunction("Francis");
+        Assertions.assertEquals(exampleObject.name, exampleObject.finalString);
     }
 
     @Test
