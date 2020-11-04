@@ -12,6 +12,11 @@ public class Main {
                 .setupFabulinus(exampleObject)
                 .create();
 
+
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "name"));
+        System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "name", "theFuck"));
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "name"));
+
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "bool"));
         System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "bool", "false"));
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "bool"));
