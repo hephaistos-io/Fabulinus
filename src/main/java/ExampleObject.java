@@ -45,7 +45,7 @@ public class ExampleObject {
     }
 
     public void setName(String name){
-        this.name = name;
+        this.name = "lmao you " + name + " wish";
     }
 
     public void setAge(int age){
