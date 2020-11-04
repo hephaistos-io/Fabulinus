@@ -35,7 +35,7 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
 
     private Pair<String, ValueAdapter> linkFunction(String functionName, Field field, Object object, Class clazz) {
         Method method = getMethodForFunctionName(functionName, clazz);
-        return new Pair(field.getName(), new PostValueAdapter(object, method));
+        return new Pair(field.getName(), new PostValueAdapter(object, method, field));
     }
 
     private Pair<String, ValueAdapter> linkAnonymousFunction(Field field, Object object) {
