@@ -32,13 +32,27 @@ public class GetAnnotationTests {
         @GET
         private double number;
 
+        @GET
+        private float floatNumber;
+
+        @GET
+        private long longNumber;
+
+        @GET
+        private boolean booleanValue;
+
         @GET(function = "randomString")
         private String unreachableString;
 
-        public ExampleObject(String name, int age, double number) {
+        private final String finalString = "not parsed for the library!";
+
+        public ExampleObject(String name, int age, double number, float floatNumber, long longNumber, boolean booleanValue) {
             this.name = name;
             this.age = age;
             this.number = number;
+            this.floatNumber = floatNumber;
+            this.longNumber = longNumber;
+            this.booleanValue = booleanValue;
             unreachableString = "haha can't get me!";
         }
 
@@ -54,16 +68,23 @@ public class GetAnnotationTests {
             return "asdhaisdasdpo";
         }
 
+        public float getFloatNumber(){
+            return floatNumber + floatNumber;
+        }
+
     }
 
     ExampleObject exampleObject;
     String name = "newName";
     int age = 25;
     double number = 27;
+    float floatNumber = 15f;
+    long longNumber = 12l;
+    boolean booleanValue = false;
 
     @BeforeEach
     void beforeEach() {
-        exampleObject = new ExampleObject(name, age, number);
+        exampleObject = new ExampleObject(name, age, number, floatNumber, longNumber, booleanValue);
     }
 
     @Test
@@ -85,7 +106,7 @@ public class GetAnnotationTests {
     public void parsingObjectReturnsAListWithTheCorrectAmountOfElements() {
         GetAnnotationStrategy getAnnotationStrategy = new GetAnnotationStrategy();
         List<Pair<String, ValueAdapter>> list = getAnnotationStrategy.parseFields(exampleObject);
-        Assertions.assertTrue(list.size() == 4);
+        Assertions.assertTrue(list.size() == 7);
         list.forEach(entry -> {
             Assertions.assertNotNull(entry.getKey());
             Assertions.assertNotNull(entry.getValue());
@@ -132,7 +153,10 @@ public class GetAnnotationTests {
         Assertions.assertEquals(map.get("name").invokeFunction((Object) null), name);
         Assertions.assertEquals(map.get("age").invokeFunction((Object) null), age);
         Assertions.assertEquals(map.get("number").invokeFunction((Object) null), number);
+        Assertions.assertEquals(map.get("floatNumber").invokeFunction((Object) null), floatNumber + floatNumber);
         Assertions.assertEquals(map.get("unreachableString").invokeFunction((Object) null), exampleObject.randomString());
+        Assertions.assertEquals(map.get("longNumber").invokeFunction((Object) null), longNumber);
+        Assertions.assertEquals(map.get("booleanValue").invokeFunction((Object) null), booleanValue);
     }
 
 
