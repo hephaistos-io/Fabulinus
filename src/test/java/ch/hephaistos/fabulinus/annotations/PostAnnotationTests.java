@@ -59,7 +59,7 @@ public class PostAnnotationTests {
         private boolean booleanValue;
 
         @POST(function = "randomString")
-        private String unreachableString;
+        private String randomText;
 
         private final String finalString = "not parsed for the library!";
 
@@ -70,7 +70,7 @@ public class PostAnnotationTests {
             this.floatNumber = floatNumber;
             this.longNumber = longNumber;
             this.booleanValue = booleanValue;
-            unreachableString = "haha can't get me!";
+            randomText = "haha can't get me!";
         }
 
         public void setName(String name) {
@@ -81,8 +81,8 @@ public class PostAnnotationTests {
             this.age = age;
         }
 
-        public String randomString() {
-            return "asdhaisdasdpo";
+        public void randomString(String prefix) {
+            randomText = prefix + randomText;
         }
 
         public void setFloatNumber(float floatNumber){
