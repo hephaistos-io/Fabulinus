@@ -25,11 +25,11 @@ public class GetValueAdapter implements ValueAdapter {
     }
 
     @Override
-    public Object invokeFunction() {
+    public Object invokeFunction(Object... parameters) {
         try {
-            if(method == null){
+            if (method == null) {
                 field.setAccessible(true);
-                Object returnObject =  field.get(object);
+                Object returnObject = field.get(object);
                 field.setAccessible(false);
                 return returnObject;
             } else {
@@ -42,5 +42,4 @@ public class GetValueAdapter implements ValueAdapter {
         }
         return null;
     }
-
 }

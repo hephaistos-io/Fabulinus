@@ -42,10 +42,10 @@ public class Main {
                 .setDataFormatter(new XmlDataFormatter())
                 .setupFabulinus(exampleObject)
                 .create();
-        System.out.println(requestHandler.getValue("name"));
-        System.out.println(requestHandler.getValue("age"));
-        System.out.println(requestHandler.getValue("number"));
-        System.out.println(requestHandler.getValue("unreachableString"));
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "name"));
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "number"));
+        System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "unreachableString"));
 
     }
 
