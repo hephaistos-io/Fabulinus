@@ -1,8 +1,8 @@
 package ch.hephaistos.fabulinus.annotations.post;
 
-import ch.hephaistos.fabulinus.annotations.AnnotationStrategy;
 import ch.hephaistos.fabulinus.adapter.Pair;
 import ch.hephaistos.fabulinus.adapter.ValueAdapter;
+import ch.hephaistos.fabulinus.annotations.AnnotationStrategy;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -14,14 +14,14 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
 
     @Override
     public List<Pair<String, ValueAdapter>> parseFields(Object object) {
-        List<Pair<String, ValueAdapter>> pairs = new ArrayList();
+        List<Pair<String, ValueAdapter>> pairs = new ArrayList<>();
         Class clazz = object.getClass();
-        Arrays.asList(clazz.getDeclaredFields()).stream()
+        Arrays.stream(clazz.getDeclaredFields())
                 .filter(field -> field.isAnnotationPresent(POST.class))
                 .forEach(field -> {
                     String functionName = generateFunctionName(field.getName());
                     if (field.getAnnotation(POST.class).function().isEmpty()) {
-                        if (Arrays.asList(clazz.getDeclaredMethods()).stream().anyMatch(name -> name.toString().contains(functionName))) {
+                        if (Arrays.stream(clazz.getDeclaredMethods()).anyMatch(name -> name.toString().contains(functionName))) {
                             pairs.add(linkFunction(functionName, field, object, clazz));
                         } else {
                             pairs.add(linkAnonymousFunction(field, object));
@@ -43,7 +43,10 @@ public class PostAnnotationStrategy implements AnnotationStrategy {
     }
 
     private Method getMethodForFunctionName(String functionName, Class clazz) {
-        return Arrays.asList(clazz.getDeclaredMethods()).stream().filter(m -> m.getName().equals(functionName)).findFirst().get();
+        return Arrays.stream(clazz.getDeclaredMethods())
+                .filter(m -> m.getName().equals(functionName))
+                .findFirst()
+                .get();
     }
 
     private String generateFunctionName(String fieldName) {
