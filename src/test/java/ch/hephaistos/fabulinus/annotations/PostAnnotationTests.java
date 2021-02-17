@@ -187,9 +187,4 @@ public class PostAnnotationTests {
         Assertions.assertEquals(exampleObject.randomText, prefix + currentValue);
     }
 
-    @Test
-    @DisplayName("The generated functions return the correct values")
-    public void generatedFunctionsReturnTheCorrectValues() {
-        Assertions.fail("Not implemented");
-    }
 }
