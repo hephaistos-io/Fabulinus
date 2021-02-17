@@ -2,7 +2,6 @@ package ch.hephaistos.fabulinus.annotations;
 
 import ch.hephaistos.fabulinus.adapter.Pair;
 import ch.hephaistos.fabulinus.adapter.ValueAdapter;
-import ch.hephaistos.fabulinus.annotations.get.GET;
 import ch.hephaistos.fabulinus.annotations.post.DefaultPostValidatorStrategy;
 import ch.hephaistos.fabulinus.annotations.post.POST;
 import ch.hephaistos.fabulinus.annotations.post.PostAnnotationStrategy;
