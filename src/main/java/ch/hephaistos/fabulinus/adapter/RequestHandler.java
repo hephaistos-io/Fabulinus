@@ -34,6 +34,7 @@ public class RequestHandler {
         if(resources.get(requestType.getName()).containsKey(variableName)){
             ValueAdapter valueAdapter = resources.get(requestType.getName()).get(variableName);
             return dataFormatter.formatData(variableName, valueAdapter.invokeFunction(null).toString());
+
         }
         return "No such variable found";
     }

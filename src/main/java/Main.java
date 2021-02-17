@@ -2,10 +2,12 @@ import ch.hephaistos.fabulinus.adapter.Fabulinus;
 import ch.hephaistos.fabulinus.adapter.RequestHandler;
 import ch.hephaistos.fabulinus.adapter.RequestType;
 import ch.hephaistos.fabulinus.formatter.JsonDataFormatter;
+import ch.hephaistos.fabulinus.formatter.XmlDataFormatter;
 
 public class Main {
 
     public static void main(String args[]) {
+      
         ExampleObject exampleObject = new ExampleObject("newNameWhoThis?", 27, 27.32, 77f, true, 1337l);
         RequestHandler requestHandler = new Fabulinus()
                 .setDataFormatter(new JsonDataFormatter())
@@ -34,6 +36,16 @@ public class Main {
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
         System.out.println("Was able to POST value?:" + requestHandler.applyStoringRequest(RequestType.POST, "age", "12"));
         System.out.println(requestHandler.applyRetrievalRequest(RequestType.GET, "age"));
+
+
+        requestHandler = new Fabulinus()
+                .setDataFormatter(new XmlDataFormatter())
+                .setupFabulinus(exampleObject)
+                .create();
+        System.out.println(requestHandler.getValue("name"));
+        System.out.println(requestHandler.getValue("age"));
+        System.out.println(requestHandler.getValue("number"));
+        System.out.println(requestHandler.getValue("unreachableString"));
 
     }
 

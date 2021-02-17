@@ -56,6 +56,24 @@ public class ExampleObject {
         this.name = RANDOM_STRING;
     }
 
+    private String name;
+
+    @GET
+    private int age;
+
+    @GET
+    private double number;
+
+    @GET(function="randomString")
+    private String unreachableString;
+
+    public ExampleObject(String name, int age, double number){
+        this.name = name;
+        this.age = age;
+        this.number = number;
+        unreachableString = "haha can't get me!";
+    }
+
     public String getName(){
         return name;
     }
@@ -63,7 +81,6 @@ public class ExampleObject {
     public int getAge(){
         return age;
     }
-
 
     public void doubleValue(double value){
         this.number = 2*value;
