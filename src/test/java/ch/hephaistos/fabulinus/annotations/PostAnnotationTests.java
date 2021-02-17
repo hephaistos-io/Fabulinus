@@ -165,13 +165,26 @@ public class PostAnnotationTests {
     @Test
     @DisplayName("creates a correct anonymous function for the variable")
     public void linksNewAnonymousFunctionToTheVariable() {
-        Assertions.fail("Not implemented");
+        int valueToCheckWith = 12;
+        PostAnnotationStrategy postAnnotationStrategy = new PostAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = postAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        map.get("number").invokeFunction(String.valueOf(valueToCheckWith));
+        Assertions.assertEquals(exampleObject.number, valueToCheckWith);
     }
 
     @Test
     @DisplayName("links given function to variable")
     public void linksFunctionToTheVariable() {
-        Assertions.fail("Not implemented");
+        String currentValue = exampleObject.randomText;
+        String prefix = "pR3sadFixasd213123";
+        PostAnnotationStrategy postAnnotationStrategy = new PostAnnotationStrategy();
+        List<Pair<String, ValueAdapter>> list = postAnnotationStrategy.parseFields(exampleObject);
+        HashMap<String, ValueAdapter> map = new HashMap<>();
+        list.forEach(entry -> map.put(entry.getKey(), entry.getValue()));
+        map.get("randomText").invokeFunction(prefix);
+        Assertions.assertEquals(exampleObject.randomText, prefix + currentValue);
     }
 
     @Test
