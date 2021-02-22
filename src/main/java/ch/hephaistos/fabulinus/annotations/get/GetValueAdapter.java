@@ -1,4 +1,4 @@
-package ch.hephaistos.fabulinus.annotations;
+package ch.hephaistos.fabulinus.annotations.get;
 
 import ch.hephaistos.fabulinus.adapter.ValueAdapter;
 
@@ -24,12 +24,17 @@ public class GetValueAdapter implements ValueAdapter {
         this.field = field;
     }
 
+    /**
+     * Value is not used here, as it's used to simply GET the value
+     * @param parameters
+     * @return
+     */
     @Override
-    public Object invokeFunction(Object... parameters) {
+    public Object invokeFunction(Object ...parameters) {
         try {
-            if (method == null) {
+            if(method == null){
                 field.setAccessible(true);
-                Object returnObject = field.get(object);
+                Object returnObject =  field.get(object);
                 field.setAccessible(false);
                 return returnObject;
             } else {
@@ -42,4 +47,5 @@ public class GetValueAdapter implements ValueAdapter {
         }
         return null;
     }
+
 }

@@ -8,27 +8,44 @@ import java.util.Map;
 
 public class RequestHandler {
 
-    private Map<String, ValueAdapter> resources;
+    private Map<String, Map<String, ValueAdapter>> resources;
     private DataFormatter dataFormatter;
 
-    public RequestHandler(){
+    public RequestHandler() {
         resources = new HashMap();
+        setupRequestTypes();
     }
 
-    public void addEntry(Pair<String, ValueAdapter> entry){
-        resources.put(entry.getKey(), entry.getValue());
+    private void setupRequestTypes(){
+        for(RequestType requestType : RequestType.values()){
+            resources.put(requestType.getName(), new HashMap<String, ValueAdapter>());
+        }
     }
 
-    public void addEntries(List<Pair<String, ValueAdapter>> entries){
-        entries.forEach(this::addEntry);
+    public void addEntry(RequestType requestType, Pair<String, ValueAdapter> entry){
+        resources.get(requestType.getName()).put(entry.getKey(), entry.getValue());
     }
 
-    public String getValue(String variableName){
-        if(resources.containsKey(variableName)){
-            ValueAdapter valueAdapter = resources.get(variableName);
-            return dataFormatter.formatData(variableName, valueAdapter.invokeFunction().toString());
+    public void addEntries(RequestType requestType, List<Pair<String, ValueAdapter>> entries){
+        entries.forEach(entry -> addEntry(requestType, entry));
+    }
+
+    public String applyRetrievalRequest(RequestType requestType, String variableName){
+        if(resources.get(requestType.getName()).containsKey(variableName)){
+            ValueAdapter valueAdapter = resources.get(requestType.getName()).get(variableName);
+            return dataFormatter.formatData(variableName, valueAdapter.invokeFunction(null).toString());
+
         }
         return "No such variable found";
+    }
+
+    public boolean applyStoringRequest(RequestType requestType, String variableName, String value){
+        if(resources.get(requestType.getName()).containsKey(variableName)){
+            ValueAdapter valueAdapter = resources.get(requestType.getName()).get(variableName);
+            valueAdapter.invokeFunction(value);
+            return true;
+        }
+        return false;
     }
 
     public void setDataFormatter(DataFormatter dataFormatter){

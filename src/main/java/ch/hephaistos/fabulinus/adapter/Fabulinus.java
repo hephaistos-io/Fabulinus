@@ -1,7 +1,7 @@
 package ch.hephaistos.fabulinus.adapter;
 
-import ch.hephaistos.fabulinus.annotations.GetAnnotationStrategy;
 import ch.hephaistos.fabulinus.formatter.DataFormatter;
+
 
 public class Fabulinus {
 
@@ -12,7 +12,9 @@ public class Fabulinus {
     }
 
     public Fabulinus setupFabulinus(Object object) {
-        requestHandler.addEntries(new GetAnnotationStrategy().parseFields(object));
+        for(RequestType requestType : RequestType.values()){
+            requestHandler.addEntries(requestType, requestType.getAnnotationStrategy().parseFields(object));
+        }
         return this;
     }
 
